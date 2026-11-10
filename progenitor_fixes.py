@@ -4,6 +4,18 @@ import itertools
 import sys
 import os
 
+def add_global_identifier_aliases(types):
+    # Delegate action views use these spellings; keep canonical action output.
+    types, count = re.subn(
+        r'(pub enum GlobalContractIdentifier\s*\{\n)([ \t]*)(CodeHash\(CryptoHash\),\n)([ \t]*)(AccountId\(AccountId\),)',
+        r'\1\2#[serde(alias = "hash")]\n\2\3\4#[serde(alias = "account_id")]\n\4\5',
+        types,
+    )
+    if count != 1:
+        raise ValueError('expected exactly one generated GlobalContractIdentifier')
+    return types
+
+
 def reconstructAllOfOneOf(schema):
     # return
     print('reconstructing allOf to oneOf. only for testing with progenitor')
@@ -92,6 +104,7 @@ pub mod types {"""
     near_gas_start = types.find('#[doc = "`NearGas`"]')
     network_info_view_start = types.find('#[doc = "`NetworkInfoView`"]') # remove NearGas and NearToken
     types = types[:near_gas_start] + types[network_info_view_start:]
+    types = add_global_identifier_aliases(types)
 
     # Remove inline error module
     error_start = types.find('#[doc = r" Error types."]')

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Decode RPC view spellings `hash` and `account_id` in nested delegated global
+  contract actions while preserving canonical `CodeHash` / `AccountId` output.
+
 ## [0.8.0](https://github.com/near/near-openapi-client-rs/compare/near-openapi-types-v0.7.0...near-openapi-types-v0.8.0) - 2026-03-04
 
 ### Fixed

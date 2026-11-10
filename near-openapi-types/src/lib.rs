@@ -12007,7 +12007,9 @@ impl ::std::convert::TryFrom<::std::string::String> for GlobalContractDeployMode
 #[doc = r" </details>"]
 #[derive(:: serde :: Deserialize, :: serde :: Serialize, Clone, Debug)]
 pub enum GlobalContractIdentifier {
+    #[serde(alias = "hash")]
     CodeHash(CryptoHash),
+    #[serde(alias = "account_id")]
     AccountId(AccountId),
 }
 impl ::std::convert::From<&Self> for GlobalContractIdentifier {
